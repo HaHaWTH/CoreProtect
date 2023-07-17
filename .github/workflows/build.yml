@@ -25,14 +25,14 @@ jobs:
           key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
           restore-keys: ${{ runner.os }}-m2
       - name: Build
-        run: mvn -B verify
+        run: mvn -B package
       - name: Upload a Build Artifact
         uses: actions/upload-artifact@v3.1.2
         with:
     # Artifact name
          name: coreprotect
     # A file, directory or wildcard pattern that describes what to upload
-         path: ./target/
+         path: ./target
     # The desired behavior if no files are found using the provided pat
 #Output a warning but do not fail the action
   #error: Fail the action with an error message
