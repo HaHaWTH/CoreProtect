@@ -86,8 +86,10 @@ public class Config extends Language {
     public boolean PLAYER_MESSAGES;
     public boolean PLAYER_COMMANDS;
     public boolean PLAYER_SESSIONS;
+    public boolean UNKNOWN_LOGGING;
     public boolean USERNAME_CHANGES;
     public boolean WORLDEDIT;
+    public int MAXIMUM_POOL_SIZE;
     public int MYSQL_PORT;
     public int DEFAULT_RADIUS;
     public int MAX_RADIUS;
@@ -195,6 +197,8 @@ public class Config extends Language {
         this.HOPPER_FILTER_META = this.getBoolean("hopper-filter-meta", false);
         this.EXCLUDE_TNT = this.getBoolean("exclude-tnt", false);
         this.NETWORK_DEBUG = this.getBoolean("network-debug", false);
+        this.UNKNOWN_LOGGING = this.getBoolean("unknown-logging", false);
+        this.MAXIMUM_POOL_SIZE = this.getInt("maximum-pool-size", 10);
         this.DONATION_KEY = this.getString("donation-key");
         this.MYSQL = this.getBoolean("use-mysql");
         this.PREFIX = this.getString("table-prefix");
@@ -311,7 +315,7 @@ public class Config extends Language {
 
         configured = configured.replaceAll("[^0-9]", "");
 
-        return configured.isEmpty() ? 0 : Integer.parseInt(configured);
+        return configured.isEmpty() ? dfl : Integer.parseInt(configured);
     }
 
     private String getString(final String key) {
