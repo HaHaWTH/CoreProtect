@@ -1,8 +1,14 @@
 package net.coreprotect.paper;
 
+import java.net.URI;
+import java.net.URL;
+
+import org.bukkit.Bukkit;
 import org.bukkit.block.Sign;
+import org.bukkit.block.Skull;
 import org.bukkit.block.sign.Side;
 
+import net.coreprotect.config.Config;
 import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
 
 public class Paper_v1_20 extends Paper_v1_17 implements PaperInterface {
@@ -15,6 +21,46 @@ public class Paper_v1_20 extends Paper_v1_17 implements PaperInterface {
         }
         else {
             return LegacyComponentSerializer.legacySection().serialize(sign.getSide(Side.BACK).line(line - 4));
+        }
+    }
+
+    @Override
+    public String getSkullOwner(Skull skull) {
+        String owner = skull.getPlayerProfile().getName();
+        if (Config.getGlobal().MYSQL) {
+            if (owner.length() > 255 && skull.getPlayerProfile().getId() != null) {
+                return skull.getPlayerProfile().getId().toString();
+            }
+            else if (owner.length() > 255) {
+                return owner.substring(0, 255);
+            }
+        }
+
+        return owner;
+    }
+
+    @Override
+    public void setSkullOwner(Skull skull, String owner) {
+        skull.setPlayerProfile(Bukkit.createProfile(owner));
+    }
+
+    @Override
+    public String getSkullSkin(Skull skull) {
+        URL skin = skull.getPlayerProfile().getTextures().getSkin();
+        if (skin == null) {
+            return null;
+        }
+
+        return skin.toString();
+    }
+
+    @Override
+    public void setSkullSkin(Skull skull, String skin) {
+        try {
+            skull.getPlayerProfile().getTextures().setSkin(URI.create(skin).toURL());
+        }
+        catch (Exception e) {
+            e.printStackTrace();
         }
     }
 

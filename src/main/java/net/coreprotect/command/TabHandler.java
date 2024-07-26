@@ -301,7 +301,7 @@ public class TabHandler implements TabCompleter {
 
                 if (materials == null) {
                     List<Material> addList = Arrays.asList(Material.ARMOR_STAND);
-                    List<Material> excludeList = Arrays.asList(Material.GRASS);
+                    List<Material> excludeList = Arrays.asList();
                     Set<String> materialList = new HashSet<>();
 
                     Material[] materialValues = Material.values();
@@ -315,6 +315,11 @@ public class TabHandler implements TabCompleter {
                     }
                     for (Material add : addList) {
                         materialList.add(add.name().toLowerCase(Locale.ROOT));
+                    }
+
+                    // add custom tags
+                    for (String tag : CommandHandler.getTags().keySet()) {
+                        materialList.add(tag);
                     }
 
                     materials = new ArrayList<>(materialList);

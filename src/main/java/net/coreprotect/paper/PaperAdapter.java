@@ -3,6 +3,7 @@ package net.coreprotect.paper;
 import org.bukkit.Location;
 import org.bukkit.Server;
 import org.bukkit.block.Sign;
+import org.bukkit.block.Skull;
 import org.bukkit.entity.Entity;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryHolder;
@@ -22,6 +23,7 @@ public class PaperAdapter implements PaperInterface {
     public static final int PAPER_V1_18 = BukkitAdapter.BUKKIT_V1_18;
     public static final int PAPER_V1_19 = BukkitAdapter.BUKKIT_V1_19;
     public static final int PAPER_V1_20 = BukkitAdapter.BUKKIT_V1_20;
+    public static final int PAPER_V1_21 = BukkitAdapter.BUKKIT_V1_21;
 
     public static void loadAdapter() {
         int paperVersion = ConfigHandler.SERVER_VERSION;
@@ -47,6 +49,7 @@ public class PaperAdapter implements PaperInterface {
                 PaperAdapter.ADAPTER = new Paper_v1_17();
                 break;
             case PAPER_V1_20:
+            case PAPER_V1_21:
             default:
                 PaperAdapter.ADAPTER = new Paper_v1_20();
                 break;
@@ -71,6 +74,26 @@ public class PaperAdapter implements PaperInterface {
     @Override
     public void teleportAsync(Entity entity, Location location) {
         entity.teleport(location);
+    }
+
+    @Override
+    public String getSkullOwner(Skull skull) {
+        return skull.getOwningPlayer().getUniqueId().toString();
+    }
+
+    @Override
+    public void setSkullOwner(Skull skull, String owner) {
+        return;
+    }
+
+    @Override
+    public String getSkullSkin(Skull skull) {
+        return null;
+    }
+
+    @Override
+    public void setSkullSkin(Skull skull, String skin) {
+        return;
     }
 
 }
